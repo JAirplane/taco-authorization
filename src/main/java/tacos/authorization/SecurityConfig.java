@@ -8,17 +8,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.web.SecurityFilterChain;
 import tacos.authorization.users.TacoUserRepository;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(
-                authorizeRequests -> authorizeRequests.anyRequest().authenticated());
+        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(httpSecurity);
         return httpSecurity.formLogin(Customizer.withDefaults()).build();
     }
 
